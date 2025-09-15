@@ -1,0 +1,224 @@
+/* === EVA HUD STYLE – App.css replacement === */
+
+/* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap");
+
+:root{
+  /* Color System (EVA Unit-01) */
+  --eva-bg: #0B0F14;               /* near-black cockpit */
+  --eva-panel: #121722;            /* panel surface */
+  --eva-panel-2: #181e2b;          /* elevated surface */
+  --eva-purple: #6a1fb3;           /* unit-01 shell */
+  --eva-purple-2: #9c4dff;         /* bright edge */
+  --eva-green: #a6ff00;            /* toxic accent */
+  --eva-green-2: #d0ff66;          /* hover accent */
+  --eva-orange: #ff6a00;           /* caution */
+  --eva-red: #ff0033;              /* alert */
+  --eva-text: #cfd7ff;             /* high-contrast text */
+  --eva-text-dim: #8ba0c9;         /* secondary */
+  --eva-line: #1e2533;             /* grid line */
+
+  /* Shadows/Glow */
+  --eva-glow: 0 0 10px rgba(166,255,0,0.35), 0 0 24px rgba(166,255,0,0.2);
+  --eva-glow-purple: 0 0 10px rgba(156,77,255,0.35), 0 0 24px rgba(156,77,255,0.2);
+
+  /* Rhythm */
+  --eva-radius: 18px;
+  --eva-bracket: 10px;
+  --eva-gap: 14px;
+}
+
+/* Page baseline */
+*{ box-sizing: border-box; }
+html, body, #root{
+  height:100%;
+}
+body{
+  margin:0;
+  color:var(--eva-text);
+  background:
+    /* subtle diagonal noise */
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+
+    /* grid */
+    linear-gradient(#0000 31px, var(--eva-line) 32px),
+    linear-gradient(90deg, #0000 31px, var(--eva-line) 32px),
+    var(--eva-bg);
+  background-size: auto, 32px 32px, 32px 32px, auto;
+  font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.2px;
+}
+
+/* Scanline overlay */
+body::before{
+  content:"";
+  position: fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(0,0,0,0.05), rgba(255,255,255,0.02)) ,
+    repeating-linear-gradient( to bottom, rgba(0,0,0,0.15) 0 1px, rgba(0,0,0,0) 2px 4px);
+  mix-blend-mode: overlay;
+}
+
+/* App container */
+#root{
+  display:grid;
+  place-items:center;
+  padding:48px 24px;
+}
+
+/* Panel/Card */
+.eva-card{
+  width:min(920px, 92vw);
+  background: linear-gradient(180deg, var(--eva-panel), var(--eva-panel-2));
+  border:1px solid #20283a;
+  border-radius: var(--eva-radius);
+  padding: 20px clamp(18px, 4vw, 28px);
+  position:relative;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* HUD corner brackets */
+.eva-card::before,
+.eva-card::after{
+  content:"";
+  position:absolute;
+  width: calc(var(--eva-bracket) * 2);
+  height: calc(var(--eva-bracket) * 2);
+  border:2px solid var(--eva-purple-2);
+  filter: drop-shadow(var(--eva-glow-purple));
+}
+.eva-card::before{
+  top:10px; left:10px; border-right:none; border-bottom:none; border-radius:8px 0 0 0;
+}
+.eva-card::after{
+  bottom:10px; right:10px; border-left:none; border-top:none; border-radius:0 0 8px 0;
+}
+
+/* Title line */
+.eva-title{
+  font-family:"Orbitron", system-ui, sans-serif;
+  font-weight:800;
+  letter-spacing:1.5px;
+  font-size: clamp(18px, 2.4vw, 28px);
+  color: var(--eva-green);
+  text-shadow: 0 0 6px rgba(166,255,0,0.45);
+  display:flex; align-items:center; gap:10px;
+}
+.eva-title::before,
+.eva-title::after{
+  content:"[";
+  color: var(--eva-purple-2);
+  text-shadow: 0 0 8px rgba(156,77,255,0.6);
+}
+.eva-title::after{ content:"]"; }
+
+/* Subtitle/meta line */
+.eva-sub{
+  margin-top:6px;
+  color:var(--eva-text-dim);
+  font-size:12.5px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+
+/* Divider */
+.eva-divider{
+  margin:16px 0;
+  height:1px;
+  background: linear-gradient(90deg, transparent, var(--eva-purple-2), transparent);
+  box-shadow: var(--eva-glow-purple);
+}
+
+/* Buttons */
+.eva-btn{
+  --bcol: var(--eva-green);
+  appearance:none;
+  border:1px solid var(--bcol);
+  background: linear-gradient(180deg, rgba(166,255,0,0.12), rgba(166,255,0,0.03));
+  color:var(--eva-text);
+  font-family:"Orbitron", system-ui, sans-serif;
+  font-weight:600;
+  letter-spacing:1px;
+  padding:10px 16px;
+  border-radius:10px;
+  display:inline-flex; align-items:center; gap:10px;
+  cursor:pointer;
+  box-shadow: var(--eva-glow);
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+  position:relative;
+}
+.eva-btn:hover{
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(208,255,102,0.18), rgba(166,255,0,0.06));
+  box-shadow: 0 0 0 2px rgba(166,255,0,0.2), var(--eva-glow);
+}
+.eva-btn:active{ transform: translateY(0); }
+.eva-btn--purple{ --bcol: var(--eva-purple-2); box-shadow: var(--eva-glow-purple); }
+
+/* Button brackets */
+.eva-btn::before, .eva-btn::after{
+  content:"";
+  position:absolute; width:8px; height:8px; border:2px solid var(--bcol);
+}
+.eva-btn::before{ left:6px; top:6px; border-right:none; border-bottom:none; }
+.eva-btn::after{ right:6px; bottom:6px; border-left:none; border-top:none; }
+
+/* Badges (WARN/ALERT/OK) */
+.eva-badge{
+  display:inline-block;
+  padding:3px 8px;
+  font-size:11px;
+  letter-spacing:1px;
+  border-radius:6px;
+  border:1px solid currentColor;
+  text-transform:uppercase;
+}
+.eva-badge--ok{ color: var(--eva-green); box-shadow: var(--eva-glow); }
+.eva-badge--warn{ color: var(--eva-orange); text-shadow: 0 0 6px rgba(255,106,0,0.5);}
+.eva-badge--alert{ color: var(--eva-red); text-shadow: 0 0 8px rgba(255,0,51,0.55); }
+
+/* Caution stripe background */
+.eva-caution{
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(255,106,0,0.22) 0 10px,
+      rgba(255,106,0,0.05) 10px 20px);
+  border:1px dashed rgba(255,106,0,0.6);
+  padding:10px 12px;
+  border-radius:10px;
+}
+
+/* Data table look */
+.eva-table{
+  width:100%;
+  border-collapse: collapse;
+  font-size:13px;
+}
+.eva-table th, .eva-table td{
+  border:1px solid #1f293e;
+  padding:8px 10px;
+}
+.eva-table thead th{
+  background: #141a28;
+  color: var(--eva-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tiny caret animation (terminal cursor) */
+.eva-caret{
+  display:inline-block; width:8px; height:1.2em;
+  margin-left:6px; background: var(--eva-green);
+  box-shadow: var(--eva-glow);
+  animation: blink 1.2s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; }}
+
+/* Utility spacing */
+.row{ display:flex; gap:var(--eva-gap); flex-wrap:wrap; }
+.mt-s{ margin-top:10px; }
+.mt-m{ margin-top:18px; }
+.mt-l{ margin-top:26px; }
