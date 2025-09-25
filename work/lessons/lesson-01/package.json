@@ -1,0 +1,34 @@
+{
+  "name": "lesson-01",
+  "version": "1.0.0",
+  "description": "By the end of this lesson, you will have learned how to:",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/cli/index.ts",
+    "build": "tsc -p .",
+    "start": "node dist/cli/index.js",
+    "test": "vitest run",
+    "lint": "eslint --ext .ts src",
+    "format": "prettier -w ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@types/node": "^24.5.0",
+    "blessed": "^0.1.81",
+    "date-fns": "^4.1.0",
+    "fs-extra": "^11.3.2",
+    "typescript": "^5.9.2",
+    "uuid": "^13.0.0",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "vitest": "^3.2.4"
+  }
+}
